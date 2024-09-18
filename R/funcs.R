@@ -20,7 +20,7 @@ tsg_update_cache = function(gencode="46") {
         message(paste0("\t",basename(f)),appendLF=F)
         download.file(f, destfile = file.path(cache_dir,basename(f)), mode="wb")
     }    
-    getOption('timeout')
+    options(timeout=1000)
     if (file.exists(file.path(cache_dir,paste0("gencode.v",gencode,".annotation.gff3.gz")))) {
         message(paste0("\tGencode is up to date."),appendLF=F)
     } else {
