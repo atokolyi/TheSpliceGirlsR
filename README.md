@@ -1,5 +1,5 @@
 # TheSpliceGirls
-
+An annotation pipeline for transcript splicing events (i.e. from [leafcutter](https://davidaknowles.github.io/leafcutter/))
 ## Installation
 Clone the repo
 ```bash
