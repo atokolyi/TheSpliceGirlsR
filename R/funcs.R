@@ -143,6 +143,7 @@ tsg_annotate = function(splices) {
             
             #mergeids = mergeids[order(types=="protein_coding",decreasing = TRUE)]
             #types = types[order(types=="protein_coding",decreasing = TRUE)]
+            
             samestrand = c()
             for (m in mergeids) {
                 samestrand = c(samestrand,gff_genes[m,]$strand==splices[i,]$strand)
