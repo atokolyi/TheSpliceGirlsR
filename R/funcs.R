@@ -153,9 +153,11 @@ tsg_annotate = function(splices) {
                 splices$merge_type[i] = paste0(gff_genes[mergeids[samestrand],]$gene_type,collapse=",")
             } else {
                 splices$merge_id[i] = paste0(mergeids,collapse=",")
-                splices$merge_name[i] = paste0(gff_genes[mergeids,]$gene_name, " (OS)",collapse=",")
+                splices$merge_name[i] = paste0(gff_genes[mergeids,]$gene_name,collapse=",")
                 splices$merge_type[i] = paste0(gff_genes[mergeids,]$gene_type,collapse=",")
-                splices$merge_OS[i] = TRUE
+                if (splices$strand[i] %in% c("+","-")) {
+                    splices$merge_OS[i] = TRUE
+                }
             }
         } else {
             if (splices$start_match[i] | splices$end_match[i]) {
@@ -177,7 +179,9 @@ tsg_annotate = function(splices) {
                     splices$merge_id[i] = paste0(mergeids,collapse=",")
                     splices$merge_name[i] = paste0(gff_genes[mergeids,]$gene_name,collapse=",")
                     splices$merge_type[i] = paste0(gff_genes[mergeids,]$gene_type,collapse=",")
-                    splices$merge_OS[i] = TRUE
+                    if (splices$strand[i] %in% c("+","-")) {
+                        splices$merge_OS[i] = TRUE
+                    }
                 }   
             } else {
                     splices$merge_id[i] = ""
@@ -280,6 +284,12 @@ tsg_annotate = function(splices) {
     splices$pfamDomain = doms
     splices[which(!splices$overlaps_cds),]$pfamDomain=""
 
+    # Change types to numeric
+    splices$start = as.numeric(splices$start)
+    splices$end = as.numeric(splices$end)
+    splices$start_stranded = as.numeric(splices$start_stranded)
+    splices$end_stranded = as.numeric(splices$end_stranded)
+    
     message(paste0("Done!"),appendLF=F)
     return(splices)
 }

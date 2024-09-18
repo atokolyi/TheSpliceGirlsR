@@ -10,7 +10,6 @@ Open R, install devtools, bioconductor, & TSG
 ```R
 install.packages("devtools") # Or with conda: conda create -n tsg conda-forge::r-devtools; conda activate tsg;
 install.packages("BiocManager")
-BiocManager::install()
 devtools::install()
 ```
 ## Usage
