@@ -1,16 +1,11 @@
 # TheSpliceGirls
 An annotation pipeline for transcript splicing events (i.e. from [leafcutter](https://davidaknowles.github.io/leafcutter/))
 ## Installation
-Clone the repo
-```bash
-git clone https://github.com/atokolyi/TheSpliceGirls.git
-cd TheSpliceGirls
-```
 Open R, install devtools, bioconductor, & TSG
 ```R
 install.packages("devtools") # Or with conda: conda create -n tsg conda-forge::r-devtools; conda activate tsg;
 install.packages("BiocManager")
-devtools::install()
+devtools::install_github("atokolyi/TheSpliceGirls",upgrade="never")
 ```
 ## Usage
 Download/update the annotation cache (with desired gencode version, default is 46).
