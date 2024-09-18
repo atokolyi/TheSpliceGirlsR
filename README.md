@@ -8,6 +8,10 @@ install.packages("BiocManager")
 devtools::install_github("atokolyi/TheSpliceGirls",upgrade="never")
 ```
 ## Usage
+Load the library
+```R
+library(tsg)
+```
 Download/update the annotation cache (with desired gencode version, default is 46).
 ```R
 tsg_update_cache(gencode=46)
