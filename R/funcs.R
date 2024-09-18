@@ -286,10 +286,10 @@ tsg_annotate = function(splices) {
     splices[which(!splices$overlaps_cds),]$pfamDomain=""
 
     # Change types to numeric
-    splices$start = as.numeric(splices$start)
-    splices$end = as.numeric(splices$end)
-    splices$start_stranded = as.numeric(splices$start_stranded)
-    splices$end_stranded = as.numeric(splices$end_stranded)
+    splices$start = as.integer(splices$start)
+    splices$end = as.integer(splices$end)
+    splices$start_stranded = as.integer(splices$start_stranded)
+    splices$end_stranded = as.integer(splices$end_stranded)
     
     message(paste0("Done!"),appendLF=F)
     return(splices)
