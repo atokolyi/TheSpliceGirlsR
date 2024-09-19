@@ -31,7 +31,12 @@ tsg_update_cache = function(gencode="46") {
     # Download and run bigbedtobed
     #https://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/bigBedToBed
     message("Converting:",appendLF=F)
-    bin = "https://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/bigBedToBed"
+    # check which OS is used
+    sys_name <- Sys.info()['sysname']
+    if(sys_name == "Linux"){ sys_id <- "linux.x86_64" }
+    if(sys_name == "Darwin"){ sys_id <- "macOSX.x86_64" }
+    bin <- paste0("https://hgdownload.cse.ucsc.edu/admin/exe/", sys_id, "/bigBedToBed" )
+    
     download.file(bin, destfile = file.path(cache_dir,basename(bin)), mode="wb")
     system(paste0("chmod +x ",file.path(cache_dir,basename(bin))),intern=TRUE)
     for (f in files[2:length(files)]) {
