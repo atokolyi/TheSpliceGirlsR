@@ -245,13 +245,11 @@ tsg_annotate = function(splices) {
 
     message(paste0("\tAnnotating protein domain localizations.."),appendLF=F)
     splices$unipLocTransMemb = GenomicRanges::countOverlaps(as(splices$range,"GRanges"),unipLocTransMemb,minoverlap=2,maxgap=-1)>0
-    splices[which(!splices$overlaps_cds),]$unipLocTransMemb=FALSE
     splices$unipLocCytopl = GenomicRanges::countOverlaps(as(splices$range,"GRanges"),unipLocCytopl,minoverlap=2,maxgap=-1)>0
-    splices[which(!splices$overlaps_cds),]$unipLocCytopl=FALSE
     splices$unipLocExtra = GenomicRanges::countOverlaps(as(splices$range,"GRanges"),unipLocExtra,minoverlap=2,maxgap=-1)>0
-    splices[which(!splices$overlaps_cds),]$unipLocExtra=FALSE
     splices$unipLocSignal = GenomicRanges::countOverlaps(as(splices$range,"GRanges"),unipLocSignal,minoverlap=2,maxgap=-1)>0
-    splices[which(!splices$overlaps_cds),]$unipLocSignal=FALSE
+
+
 
     message(paste0("\tLoading protein domains"),appendLF=F)
     unipDomainT = read.table(file.path(cache_dir,'unipDomain.bed'), sep="\t", quote="")
@@ -275,7 +273,6 @@ tsg_annotate = function(splices) {
         }
     }
     splices$unipDomain = doms
-    splices[which(!splices$overlaps_cds),]$unipDomain=""
     
     hits=as.data.frame(GenomicRanges::findOverlaps(as(splices$range,"GRanges"),ucscGenePfam,minoverlap=2,maxgap=-1))
     doms = c()
@@ -288,7 +285,15 @@ tsg_annotate = function(splices) {
         }
     }
     splices$pfamDomain = doms
-    splices[which(!splices$overlaps_cds),]$pfamDomain=""
+
+    if (any(!splices$overlaps_cds)) {
+        splices[which(!splices$overlaps_cds),]$unipLocTransMemb=FALSE
+        splices[which(!splices$overlaps_cds),]$unipLocCytopl=FALSE
+        splices[which(!splices$overlaps_cds),]$unipLocExtra=FALSE
+        splices[which(!splices$overlaps_cds),]$unipLocSignal=FALSE
+        splices[which(!splices$overlaps_cds),]$pfamDomain=""
+        splices[which(!splices$overlaps_cds),]$unipDomain=""
+    }
 
     # Change types to numeric
     splices$start = as.integer(splices$start)
